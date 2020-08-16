@@ -19,6 +19,12 @@ namespace nc
 
 	struct IPEndPoint
 	{
+		IPEndPoint(const std::string& ip, unsigned short port)
+		{
+			this->ip = ip;
+			this->port = port;
+		}
+
 		std::string ip;
 		unsigned short port;
 	};

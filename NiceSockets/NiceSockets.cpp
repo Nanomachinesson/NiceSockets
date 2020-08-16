@@ -27,16 +27,22 @@ namespace nc
 		WSAData wsaData;
 		std::stringstream msg;
 		int err = WSAStartup(version, &wsaData);
-		msg << "WSAStartup: " << err;
-		throw NiceException(msg);
+
+		if (err != 0) {
+			msg << "WSAStartup: " << err;
+			throw NiceException(msg);
+		}
 	}
 
 	void cleanupWsa()
 	{
 		std::stringstream msg;
 		int err = WSACleanup();
-		msg << "WSACleanup: " << err;
-		throw NiceException(msg);
+
+		if (err != 0) {
+			msg << "WSACleanup: " << err;
+			throw NiceException(msg);
+		}
 	}
 
 	std::string resolveDNS(const std::string& hostName)
