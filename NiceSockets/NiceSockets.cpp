@@ -71,15 +71,20 @@ namespace nc
 
 	NiceSocket::NiceSocket() :
 		nSocket(NULL),
-		nlisteningSocket(NULL)
+		nlisteningSocket(NULL),
+		type(connType::TCP)
 	{
 		initWsa(MAKEWORD(2, 2));
-		nSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+		if (type == connType::TCP) {
+			nSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+		}
 	}
 
 	NiceSocket::NiceSocket(WORD version) :
 		nSocket(NULL),
-		nlisteningSocket(NULL)
+		nlisteningSocket(NULL),
+		type(connType::TCP)
 	{
 		initWsa(version);
 		nSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -196,6 +201,11 @@ namespace nc
 	void NiceSocket::nDisconnect()
 	{
 		errorCheckSock(closesocket(nSocket));
+	}
+
+	void NiceSocket::setConnType(connType type)
+	{
+		this->type = type;
 	}
 
 	void NiceSocket::nListen(unsigned short port) const

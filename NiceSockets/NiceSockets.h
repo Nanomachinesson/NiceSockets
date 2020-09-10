@@ -29,11 +29,15 @@ namespace nc
 		unsigned short port;
 	};
 
+	enum class connType{TCP, UDP};
+
 	class NiceSocket
 	{
 	public:
 		NiceSocket();
 		NiceSocket(WORD version);
+		NiceSocket(connType type);
+		NiceSocket(WORD version, connType type);
 		~NiceSocket();
 		void nConnect(const IPEndPoint& endPoint) const;
 		void nAccept(unsigned short port);
@@ -57,5 +61,7 @@ namespace nc
 		void nBind(unsigned short) const;
 		SOCKET nSocket;
 		SOCKET nlisteningSocket;
+		connType type;
+
 	};
 }
